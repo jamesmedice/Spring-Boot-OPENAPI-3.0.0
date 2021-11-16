@@ -1,0 +1,157 @@
+swagger: "2.0"
+info:
+  title: Cloud Microservice Template
+  description: Cloud Microservice Template
+  termsOfService: urn:tos
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0
+  version: '1.0.0'
+host: "poc-microservice-template.endpoints.ita-habaus-dev-001.cloud.goog"
+#x-google-endpoints:
+#- name: "____.endpoints.ita-habaus-dev-001.cloud.goog"
+#  target: "XXX.XX.XX.XX"
+schemes:
+  - "http" 
+tags:
+  - name: Payment
+    description: Payment
+paths:
+  "/payment":
+    get:
+      produces:
+      - "application/json"
+      summary: findAllPayment
+      tags:
+        - Payment
+      description: findAllPayment
+      operationId: findAllPaymentUsingGET
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Payment'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+    post:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      summary: savePayment
+      tags:
+        - Payment
+      description: savePayment
+      operationId: savePaymentUsingPOST
+      parameters:
+        -
+          description: "Message"
+          in: body
+          name: message
+          required: true
+          schema:
+            $ref: '#/definitions/Payment'
+      responses:
+        200:
+          description: OK
+          schema:
+             $ref: '#/definitions/Payment'
+        201:
+          description: Created
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+ 
+  "/publish/payment/{id}":
+    get:
+      produces:
+      - "application/json"
+      summary: findByIdAndPublish
+      tags:
+        - Payment
+      operationId: findByIdAndPublishUsingGET
+      parameters:
+        - 
+          name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+             $ref: '#/definitions/Payment'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found  
+ 
+  "/publish/payment":
+    post:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      summary: publishPayment
+      tags:
+        - Payment
+      operationId: publishPaymentUsingPOST
+      parameters:
+        -
+          description: "Message"
+          in: body
+          name: message
+          required: true
+          schema:
+            $ref: '#/definitions/Payment'
+      responses:
+        200:
+          description: OK
+          schema:
+             $ref: '#/definitions/Payment'
+        201:
+          description: Created
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+          
+definitions:
+  Payments:
+    type: "array"
+    items:
+      $ref: '#/definitions/Payment'
+  Payment:
+    type: "object"
+    properties:
+      id:
+        type: integer
+        format: int64
+      productCode:
+        type: string
+      productDescription:
+        type: string
+      quantity:
+        type: integer
+        format: int64
+      priceItem:
+        type: number
+      paymentDate:
+        type: string
+        format: date-time

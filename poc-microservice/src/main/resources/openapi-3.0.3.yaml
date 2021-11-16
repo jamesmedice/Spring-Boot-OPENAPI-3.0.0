@@ -1,0 +1,140 @@
+openapi: 3.0.3
+info:
+  title: Api Documentation
+  description: Api Documentation
+  termsOfService: urn:tos
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0
+  version: '1.0'
+servers:
+- url: "poc-microservice-template.endpoints.ita-habaus-dev-001.cloud.goog"
+  description: Inferred Url
+tags:
+- name: payment-controller
+  description: Payment Controller
+paths:
+  "/payment":
+    get:
+      tags:
+      - payment-controller
+      summary: findAllPaymentUsingGET
+      description: findAllPayment
+      operationId: findAllPaymentUsingGETUsingGET
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Payment"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+      - payment-controller
+      summary: savePaymentUsingPOST
+      operationId: savePaymentUsingPOSTUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Payment"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Payment"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/publish/payment":
+    post:
+      tags:
+      - payment-controller
+      summary: publishPayment
+      operationId: publishPaymentUsingPOSTUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Payment"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Payment"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/publish/payment/{id}":
+    get:
+      tags:
+      - payment-controller
+      summary: findByIdAndPublish
+      operationId: findByIdAndPublishUsingGETUsingGET
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        style: simple
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Payment"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    Payment:
+      title: Payment
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        paymentDate:
+          type: string
+          format: date-time
+        priceItem:
+          type: number
+          format: bigdecimal
+        productCode:
+          type: string
+        productDescription:
+          type: string
+        quantity:
+          type: integer
+          format: int64

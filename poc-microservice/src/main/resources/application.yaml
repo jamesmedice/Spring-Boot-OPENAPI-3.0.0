@@ -1,0 +1,31 @@
+server: 
+  port: "${SERVER_PORT:8080}"
+
+spring: 
+  datasource: 
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    initialization-mode: always
+    initialize: true
+    password: "${PASSWORD:habacus}"
+    url: "jdbc:mysql://${DATABASE_HOST:10.113.16.3}:${DATABASE_PORT:3306}/${CLOUD_SQL_DATABASE_NAME:db_habacus_dev}?allowPublicKeyRetrieval=true&autoReconnect=true&useSSL=false"
+    username: "${USER:habacus}"
+  jackson: 
+    date-format: com.gft.habacus.io.swagger.RFC3339DateFormat
+    serialization: 
+      WRITE_DATES_AS_TIMESTAMPS: false
+  jpa: 
+    generate-ddl: false
+    hibernate: 
+      ddl-auto: none
+    properties: 
+      hibernate: 
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+  profiles: 
+    active: "mysql"
+
+springfox: 
+  documentation: 
+    swagger: 
+      v2: 
+        path: /api-docs
